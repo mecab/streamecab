@@ -1,2 +1,5 @@
+app:
+  port: 3000
+
 index:
   dbName: "updatedb.db"
