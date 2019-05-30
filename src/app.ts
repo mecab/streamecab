@@ -1,4 +1,5 @@
 import path from 'path';
+import util from 'util';
 import config from 'config';
 import Koa from 'koa';
 import KoaRouter from 'koa-router';
@@ -7,6 +8,7 @@ import koaStatic from 'koa-static';
 import ffmpeg from 'fluent-ffmpeg';
 
 import search from './search';
+import { userInfo } from 'os';
 
 const app = new Koa();
 
@@ -54,11 +56,24 @@ router
             console.log(`Video request for ${ctx.params.path} is closed.`);
             //proc.kill('SIGTERM');
         });
-    });
+    })
+    .get('/duration/:path*', async(ctx): Promise<void> => {
+        const videoPath = path.join(config.get('index.dataDir'), ctx.params.path);
+        console.debug(videoPath);
+        const metadata = await (util.promisify(ffmpeg.ffprobe) as (path: string) => Promise<ffmpeg.FfprobeData>)(videoPath)
+        ctx.body = {
+            duration: metadata.format.duration
+        };
+    })
 
 app
     .use(router.routes())
-    .use(koaStatic(path.join(__dirname, '../dist/web')))
+    .use(koaMount('/assets', koaStatic(path.join(__dirname, '../dist/web/assets'))))
+    .use(async (ctx, next): Promise<void> => {
+        ctx.request.path = '/index.html'
+        await next();
+    })
+    .use(koaStatic(path.join(__dirname, '../dist/web/')))
     .listen(config.get('app.port'), (): void => {
         console.info(`Koa started on port ${config.get('app.port')}.`);
     });

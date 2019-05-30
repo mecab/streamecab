@@ -3,3 +3,9 @@ declare module "*.vue" {
     const _default: VueConstructor;
     export default _default;
 }
+
+declare namespace StreamecabAPI {
+    interface Duration {
+        duration: number;
+    }
+}

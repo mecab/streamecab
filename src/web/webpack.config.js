@@ -26,7 +26,7 @@ module.exports = (env, argv) => {
     return {
         mode: isProduction ? 'production' : 'development',
         entry: {
-            video: './assets/js/video.ts',
+            index: './assets/js/index.ts',
         },
         output: {
             path: __dirname + '../../../dist/web',
@@ -65,7 +65,10 @@ module.exports = (env, argv) => {
                 {
                     test: /\.ts?$/,
                     exclude: /(node_modules|bower_components)/,
-                    loader: 'ts-loader'
+                    loader: 'ts-loader',
+                    options: {
+                        appendTsSuffixTo: [/\.vue$/]
+                    }
                 },
                 {
                     test: /\.css$/,
