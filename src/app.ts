@@ -32,6 +32,8 @@ router
         console.debug(ctx.params.path);
         ctx.res.setHeader('Content-Type', 'video/webm')
         const videoPath = path.join(config.get('index.dataDir'), ctx.params.path);
+        const time = ctx.query.time || 0;
+        console.debug('time: ', time);
         console.debug(videoPath);
         const proc = ffmpeg(videoPath)
             .format('webm')
@@ -43,6 +45,7 @@ router
             .videoBitrate('512k')
             .audioBitrate('96k')
             .audioCodec('libvorbis')
+            .seekInput(time);
         //proc.pipe(ctx.response.body);
 
         proc.on('error', (err): void => {

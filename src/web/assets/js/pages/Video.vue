@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <VideoContainer :videoPath="videoPath" :duration="duration"></VideoContainer>
+        <VideoContainer :videoPath="videoPath" :duration="duration" :startFrom="startFrom" @requestSeek="onRequestSeek"></VideoContainer>
     </div>
 </template>
 
@@ -20,6 +20,7 @@ export default Vue.extend({
         return {
             videoPath: '',
             duration: 0,
+            startFrom: 0,
         };
     },
     watch: {
@@ -33,6 +34,11 @@ export default Vue.extend({
                 console.log('duration:', duration);
             },
             immediate: true
+        }
+    },
+    methods: {
+        onRequestSeek(value: number) {
+            this.$data.startFrom = value;
         }
     }
 });
