@@ -8,7 +8,6 @@ import koaStatic from 'koa-static';
 import ffmpeg from 'fluent-ffmpeg';
 
 import search from './search';
-import { userInfo } from 'os';
 
 const app = new Koa();
 
@@ -29,12 +28,11 @@ router.use('/api', new KoaRouter()
         });
     })
     .get('/video/:path*', async(ctx): Promise<void> => {
-        console.debug(ctx.params.path);
         ctx.res.setHeader('Content-Type', 'video/webm')
         const videoPath = path.join(config.get('index.dataDir'), ctx.params.path);
         const time = ctx.query.time || 0;
         console.debug('time: ', time);
-        console.debug(videoPath);
+        console.debug('videoPath: ', videoPath);
         const proc = ffmpeg(videoPath)
             .format('webm')
             .addOption('-deadline realtime')
@@ -62,7 +60,6 @@ router.use('/api', new KoaRouter()
     })
     .get('/duration/:path*', async(ctx): Promise<void> => {
         const videoPath = path.join(config.get('index.dataDir'), ctx.params.path);
-        console.debug(videoPath);
         const metadata = await (util.promisify(ffmpeg.ffprobe) as (path: string) => Promise<ffmpeg.FfprobeData>)(videoPath)
         ctx.body = {
             duration: metadata.format.duration
