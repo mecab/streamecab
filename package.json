@@ -4,21 +4,25 @@
   "description": "",
   "main": "dist/app.js",
   "scripts": {
+    "start": "node dist/app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "debug": "concurrently --kill-others -n 'app,webpack' 'npm run debug:serve' 'npm run debug:asset:watch'",
     "debug:serve": "ts-node-dev src/app.ts",
     "debug:asset:watch": "cd src/web && webpack --watch",
-    "build": "tsc && (cd ./src/web && webpack --production) && cp -r ./config ./dist"
+    "build": "echo 'Compiling server...' && tsc && echo 'Building assets...' && (cd ./src/web && webpack --production --progress)",
+    "build:clean": "rm -rf ./dist/**"
   },
   "author": "mecab",
   "license": "MIT",
   "dependencies": {
     "config": "^3.1.0",
     "fluent-ffmpeg": "^2.1.2",
+    "js-yaml": "^3.13.1",
     "koa": "^2.7.0",
     "koa-mount": "^4.0.0",
     "koa-qs": "^2.0.0",
     "koa-router": "^7.4.0",
+    "koa-static": "^5.0.0",
     "typescript": "^3.4.5"
   },
   "devDependencies": {
@@ -39,7 +43,6 @@
     "autoprefixer": "^9.5.1",
     "bourbon": "^5.1.0",
     "concurrently": "^4.1.0",
-    "copy-webpack-plugin": "^5.0.3",
     "css-loader": "^2.1.1",
     "cssnano": "^4.1.10",
     "eslint": "^5.16.0",
@@ -50,8 +53,6 @@
     "eslint-plugin-standard": "^4.0.0",
     "fast-glob": "^2.2.7",
     "html-webpack-plugin": "^3.2.0",
-    "koa-static": "^5.0.0",
-    "mini-css-extract-plugin": "^0.7.0",
     "node-sass": "^4.12.0",
     "nunjucks": "^3.2.0",
     "nunjucks-isomorphic-loader": "^2.0.2",
@@ -63,7 +64,6 @@
     "ts-node": "^8.2.0",
     "ts-node-dev": "^1.0.0-pre.39",
     "uglifyjs-webpack-plugin": "^2.1.3",
-    "url": "^0.11.0",
     "vue": "^2.6.10",
     "vue-loader": "^15.7.0",
     "vue-router": "^3.0.6",

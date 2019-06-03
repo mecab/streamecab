@@ -3,9 +3,7 @@ const glob = require('fast-glob');
 const bourbon = require('bourbon');
 const neat = require('@samhammer/bourbon-neat');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const cssnano = require('cssnano');
 const autoprefixer = require('autoprefixer');
@@ -143,7 +141,6 @@ module.exports = (env, argv) => {
                 { from: 'assets/fonts/', to: 'assets/fonts'}
             ]),
             */
-            new MiniCssExtractPlugin({ filename: 'assets/css/[name].css' })
         ],
         resolve: {
             alias: {

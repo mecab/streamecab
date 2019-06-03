@@ -1,0 +1,5 @@
+app:
+  port: 80
+
+index:
+  dataDir: "/mnt/media"
