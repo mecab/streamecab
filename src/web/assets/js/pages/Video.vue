@@ -1,15 +1,20 @@
 <template>
-    <div id="app">
+    <div id="app" class="container">
         <VideoContainer :videoPath="videoPath" :duration="duration" :startFrom="startFrom" @requestSeek="onRequestSeek"></VideoContainer>
     </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import '../../css/base';
 
-body {
-    background: #1f1f1f;
-    color: #aaaaaa;
+.container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: #1a1a1a;
+    color: #cccccc;
 }
 </style>
 
@@ -37,7 +42,7 @@ export default Vue.extend({
         '$route': {
             handler: async function (to): Promise<void> {
                 const videoPath = this.$data.videoPath = to.params.path;
-                const res = await fetch(`/duration/${videoPath}`);
+                const res = await fetch(`/api/duration/${videoPath}`);
                 const json = (await res.json()) as StreamecabAPI.Duration;
                 const duration = Math.round(json.duration);
                 this.$data.duration = duration;

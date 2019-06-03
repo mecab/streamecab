@@ -13,7 +13,7 @@ import { userInfo } from 'os';
 const app = new Koa();
 
 const router = new KoaRouter();
-router
+router.use('/api', new KoaRouter()
     .get('/search', async(ctx): Promise<void> => {
         console.debug(ctx.query.q);
 
@@ -67,7 +67,8 @@ router
         ctx.body = {
             duration: metadata.format.duration
         };
-    })
+    }).routes()
+);
 
 app
     .use(router.routes())

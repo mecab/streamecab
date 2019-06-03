@@ -23,7 +23,7 @@
 
 .video {
     width: 100%;
-    max-height: 90vh;
+    max-height: calc(100vh - 5.5rem);
 }
 
 .toolbar {
@@ -59,7 +59,7 @@ export default Vue.extend({
         videoPathWithQuery: function() {
             const searchParams = new URLSearchParams();
             searchParams.append('time', this.$props.startFrom);
-            return `/video/${this.$props.videoPath}?${searchParams.toString()}`
+            return `/api/video/${this.$props.videoPath}?${searchParams.toString()}`
         },
 
         currentTime: function() {

@@ -6,7 +6,7 @@ import config from 'config';
 
 export default function search(query: string): { cancel: () => void; resultStream: stream.PassThrough } {
     const p = childProcess.spawn('fd',
-        [query],
+        ['-t', 'f', '-e', 'mp4', query],
         { cwd: config.get('index.dataDir') }
     );
 
