@@ -59,7 +59,6 @@ module.exports = (env, argv) => {
                             }],
                             ['babel-plugin-transform-es2015-modules-commonjs']
                         ],
-                        sourceType: 'unambiguous'
                     }
                 },
                 {
@@ -101,7 +100,10 @@ module.exports = (env, argv) => {
                         {
                             loader: 'sass-loader',
                             options: {
-                                includePaths: bourbon.includePaths.concat(neat.includePaths)
+                                includePaths: bourbon.includePaths.concat(neat.includePaths),
+                                resolve: {
+                                    extensions: ['.scss']
+                                },
                             }
                         }
                     ]

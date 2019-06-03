@@ -4,6 +4,16 @@
     </div>
 </template>
 
+<style lang="scss">
+@import '../../css/base';
+
+body {
+    background: #1f1f1f;
+    color: #aaaaaa;
+}
+</style>
+
+
 <script lang="ts">
 import Vue from 'vue';
 import VueRouter from 'vue-router';

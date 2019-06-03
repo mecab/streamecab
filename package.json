@@ -21,6 +21,9 @@
     "typescript": "^3.4.5"
   },
   "devDependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.18",
+    "@fortawesome/free-solid-svg-icons": "^5.8.2",
+    "@fortawesome/vue-fontawesome": "^0.1.6",
     "@samhammer/bourbon-neat": "^3.0.0",
     "@types/config": "0.0.34",
     "@types/fluent-ffmpeg": "^2.1.9",

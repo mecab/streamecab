@@ -1,16 +1,40 @@
 <template>
     <div>
-        <h1>{{ videoPath }}</h1>
+        <header class="header">
+            <h1 class="header__title">{{ videoPath }}</h1>
+        </header>
         <video class="video" ref="video" :src="videoPathWithQuery" @timeupdate="onTimeUpdate()" @play="onPlay" @pause="onPause" autoplay></video>
-        <video-toolbar :currentTime="currentTime" :duration="duration" :isPlaying="isPlaying"
+        <video-toolbar class="toolbar" :currentTime="currentTime" :duration="duration" :isPlaying="isPlaying"
                         @sliderChange="onSliderChange" @requestPlay="onRequestPlay" @requestStop="onRequestStop" />
     </div>
 </template>
 
+<style lang="scss">
+@import '../../css/base';
+
+.header {
+    padding: $small-spacing;
+    &__title {
+        font-size: 1.25rem;
+        margin-bottom: 0;
+        font-weight: normal;
+    }
+}
+
+.video {
+    width: 100%;
+    max-height: 90vh;
+}
+
+.toolbar {
+    margin-top: $small-spacing;
+}
+</style>
+
+
 <script lang="ts">
 import Vue from 'vue'
 import VideoToolbar from './VideoToolbar.vue';
-import 'vue-slider-component/theme/antd.css'
 
 export default Vue.extend({
     components: {
@@ -74,9 +98,3 @@ export default Vue.extend({
     }
 });
 </script>
-
-<style lang="scss">
-.video {
-    width: 100%;
-}
-</style>
