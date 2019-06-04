@@ -61,16 +61,17 @@ router.use('/api', new KoaRouter()
             .seekInput(time);
         //proc.pipe(ctx.response.body);
 
-        proc.on('error', (err): void => {
-            console.error('ffmpeg error');
-            console.error(err);
+        proc.on('error', (err: Error): void => {
+            if (err.message === 'Output stream closed') {
+                return;
+            }
+            console.error(err.message);
         })
         ctx.response.body = proc.pipe();
 
-
         ctx.req.on('close', (): void => {
             console.log(`Video request for ${ctx.params.path} is closed.`);
-            //proc.kill('SIGTERM');
+            proc.kill('SIGTERM');
         });
     })
     .get('/duration/:path*', async(ctx): Promise<void> => {
