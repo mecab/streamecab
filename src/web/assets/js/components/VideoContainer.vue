@@ -3,7 +3,7 @@
         <header class="header">
             <h1 class="header__title">{{ videoPath }}</h1>
         </header>
-        <video class="video" ref="video" :src="videoPathWithQuery" @timeupdate="onTimeUpdate()" @play="onPlay" @pause="onPause" autoplay></video>
+        <video class="video" ref="video" :src="videoPathWithQuery" @timeupdate="onTimeUpdate()" @play="onPlay" @pause="onPause" autoplay controls></video>
         <video-toolbar class="toolbar" :currentTime="currentTime" :duration="duration" :isPlaying="isPlaying"
                         @sliderChange="onSliderChange" @requestPlay="onRequestPlay" @requestStop="onRequestStop" />
     </div>
