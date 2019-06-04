@@ -1,0 +1,9 @@
+#!/bin/sh
+
+npm start & (
+    while :
+    do
+        nice -n 19 ionice -c 3 /usr/local/bin/vmtouch -t -I '*/' /mnt/media > /dev/null;
+        sleep 60;
+    done
+)
