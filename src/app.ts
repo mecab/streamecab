@@ -63,15 +63,17 @@ router.use('/api', new KoaRouter()
 
         proc.on('error', (err: Error): void => {
             if (err.message === 'Output stream closed') {
+                proc.kill('SIGKILL');
                 return;
             }
             console.error(err.message);
+            proc.kill('SIGKILL');
         })
         ctx.response.body = proc.pipe();
 
         ctx.req.on('close', (): void => {
             console.log(`Video request for ${ctx.params.path} is closed.`);
-            proc.kill('SIGTERM');
+            proc.kill('SIGKILL');
         });
     })
     .get('/duration/:path*', async(ctx): Promise<void> => {
