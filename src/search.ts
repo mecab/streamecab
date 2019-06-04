@@ -32,9 +32,10 @@ export default function search(query: string): { cancel: () => void; resultStrea
         if (code !== 0) {
             console.error('Failed to search (on close)');
             console.error(code, signal);
-            return;
         }
-        console.info('Search completed. (on close)');
+        else {
+            console.info('Search completed. (on close)');
+        }
         strm.end();
     });
 
@@ -44,7 +45,7 @@ export default function search(query: string): { cancel: () => void; resultStrea
             console.error(code, signal);
             return;
         }
-        console.info('Search completed. (on close)');
+        console.info('Search completed. (on exit)');
     });
 
     return {

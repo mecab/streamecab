@@ -8,10 +8,17 @@ import koaStatic from 'koa-static';
 import ffmpeg from 'fluent-ffmpeg';
 
 import search from './search';
+import { Stream } from 'stream';
 
 const app = new Koa();
 
 const router = new KoaRouter();
+
+function sanitizePath(pathString: string): string {
+    const normalized = path.normalize(pathString);
+    return normalized.replace(/^(\.\.(\/|\\|$))+/, '');
+}
+
 router.use('/api', new KoaRouter()
     .get('/search', async(ctx): Promise<void> => {
         console.debug(ctx.query.q);
@@ -26,10 +33,18 @@ router.use('/api', new KoaRouter()
             console.log(`Search request for ${query} is closed.`);
             cancel();
         });
+
+        resultStream.on('error', (): void => {
+            ctx.res.end();
+        });
+
+        resultStream.on('close', (): void => {
+            ctx.res.end();
+        });
     })
     .get('/video/:path*', async(ctx): Promise<void> => {
         ctx.res.setHeader('Content-Type', 'video/webm')
-        const videoPath = path.join(config.get('index.dataDir'), ctx.params.path);
+        const videoPath = path.join(config.get('index.dataDir'), sanitizePath(ctx.params.path));
         const time = ctx.query.time || 0;
         console.debug('time: ', time);
         console.debug('videoPath: ', videoPath);
@@ -59,7 +74,7 @@ router.use('/api', new KoaRouter()
         });
     })
     .get('/duration/:path*', async(ctx): Promise<void> => {
-        const videoPath = path.join(config.get('index.dataDir'), ctx.params.path);
+        const videoPath = path.join(config.get('index.dataDir'), sanitizePath(ctx.params.path));
         const metadata = await (util.promisify(ffmpeg.ffprobe) as (path: string) => Promise<ffmpeg.FfprobeData>)(videoPath)
         ctx.body = {
             duration: metadata.format.duration
