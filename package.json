@@ -5,6 +5,7 @@
   "main": "dist/app.js",
   "scripts": {
     "start": "node dist/app.js",
+    "lint": "eslint src/**.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "debug": "concurrently --kill-others -n 'app,webpack' 'npm run debug:serve' 'npm run debug:asset:watch'",
     "debug:serve": "ts-node-dev src/app.ts",

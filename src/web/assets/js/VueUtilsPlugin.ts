@@ -10,7 +10,7 @@ declare module 'vue/types/vue' {
 }
 
 const VueUtilsPlugin = {
-    install(Vue: VueConstructor, _options: object | undefined): void {
+    install(Vue: VueConstructor): void {
         Vue.$utils = utils;
     }
 };

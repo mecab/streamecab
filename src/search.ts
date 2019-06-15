@@ -1,5 +1,4 @@
 import * as stream from 'stream';
-import * as path from 'path';
 import * as childProcess from 'child_process';
 import * as readline from 'readline';
 import config from 'config';

@@ -8,7 +8,6 @@ import koaStatic from 'koa-static';
 import ffmpeg from 'fluent-ffmpeg';
 
 import search from './search';
-import { Stream } from 'stream';
 
 const app = new Koa();
 
